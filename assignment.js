@@ -1,6 +1,6 @@
 const http = require('http');
 
-const routes = require('./routes')
+const routes = require('./assignmentRoute')
 
 const server = http.createServer(routes.handler)
-server.listen(3003)
+server.listen(3004)
