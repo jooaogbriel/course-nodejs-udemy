@@ -1,7 +1,19 @@
-var reduce = function(nums, fn, init) {
-   for (let i = 0; i <= nums.length; i++){
-      init = fn(nums[0], nums[i])
-      return init
+var expect = function(val) {
+   const obj = {
+       toBe:  (val) => {
+           if(val === val){
+               return true
+           }
+           console.log(toBe(5))
+       },
+       notToBe:  (val) => {
+           if(val === val){
+               return "Not Equal"
+           }
+       },
    }
+   return obj
 };
-console.log(reduce([1, 2,3,4]))
+
+console.log(expect(5).toBe(5)); // true
+console.log(expect(5).notToBe(5)); // throws "Equal"
