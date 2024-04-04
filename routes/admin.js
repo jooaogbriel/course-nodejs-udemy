@@ -1,24 +1,24 @@
 const path = require('path');
-const products = []
 
 const express = require('express');
 
-const rootDir = require('../util/path');
+const adminController = require('../controllers/admin');
 
 const router = express.Router();
 
 // /admin/add-product => GET
-router.get('/add-product', (req, res, next) => {
-  res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
-});
+router.get('/add-product', adminController.getAddProduct);
+
+// /admin/products => GET
+router.get('/products', adminController.getProducts);
 
 // /admin/add-product => POST
-router.post('/add-product', (req, res, next) => {
+router.post('/add-product', adminController.postAddProduct);
 
-  products.push(...products,{title: req.body.title})
-  console.log('log no admin, tentando pegar todos os dados', products)
-  res.redirect('/');
-});
+router.get('/edit-product/:productId', adminController.getEditProduct);
 
-exports.routes = router;
-exports.products = products
+router.post('/edit-product', adminController.postEditProduct);
+
+router.post('/delete-product', adminController.postDeleteProduct);
+
+module.exports = router;
