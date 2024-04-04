@@ -1,17 +1,24 @@
-const http = require('http');
-const express = require('express')
-const routes = require('./routes')
+const path = require('path');
+
+const express = require('express');
 const bodyParser = require('body-parser');
 
-const app = express()
-app.use(bodyParser.json());
-app.use('/add-product', (req, res, next) => {
-    res.send('<form action="/product"><input type="text" name="title"><button type="submit">Send</button></form>')
-})
-app.use('/product', (req, res, next)=> {
-    console.log(req.body)
-    res.redirect('/')
-})
+const errorController = require('./controllers/error');
 
-const server = http.createServer(routes.handler)
-app.listen(3003)
+const app = express();
+
+app.set('view engine', 'ejs');
+app.set('views', 'views');
+
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/admin', adminRoutes);
+app.use(shopRoutes);
+
+app.use(errorController.get404);
+
+app.listen(3000);
